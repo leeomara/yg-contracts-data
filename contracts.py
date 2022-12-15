@@ -10,15 +10,15 @@ class ContractsSpider(scrapy.Spider):
         return scrapy.FormRequest.from_response(
             response,
             formdata={
-            	'P500_FISCAL_YEAR_FROM': '2007-08', 
-            	'P500_FISCAL_YEAR_TO': '2007-08'
+                'P500_FISCAL_YEAR_FROM': '2007-08', 
+                'P500_FISCAL_YEAR_TO': '2007-08'
             },
             callback=self.after_submit
         )
 
     def after_submit(self, response):
         for contract in response.css('table#report_table_P510_RESULTS tbody tr'):
-        	fields = contract.css('td::text')
+            fields = contract.css('td::text')
             yield {
                 'Contract Description': fields[0].get(),
                 'Vendor Name': fields[1].get(),
